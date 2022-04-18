@@ -36,6 +36,27 @@ module.exports = new Command("vc", async (msg, args, ctx) => {
 
   // console.log(reason)
 
+  if (close) {
+    if (!db.get(guild.id)) {
+      return msg.channel.createMessage({
+        embed: {
+          title: "Error",
+          description:
+            "Sorry, there is no active temp VC found. Please DM `person-al#9861` if this is incorrect.",
+        },
+      });
+    }
+
+    ctx.client.deleteChannel(db.get(guild.id), "Temp VC - Powered by Tram");
+    db.delete(guild.id);
+    return msg.channel.createMessage({
+      embed: {
+        title: "Channel Delete Successful",
+        description: "Voice Channel successfully deleted.",
+      },
+    });
+  }
+
   if (db.get(guild.id)) {
     return msg.channel.createMessage({
       embed: {
@@ -51,6 +72,30 @@ module.exports = new Command("vc", async (msg, args, ctx) => {
   let channelId = 0;
 
   guild.createChannel(`${reason}`, 2).then((c) => {
+    ctx.client.editChannelPermission(
+      c.id,
+      guild.id,
+      0,
+      1024,
+      0,
+      "VC Request - Powered by Tram"
+    );
+    ctx.client.editChannelPermission(
+      c.id,
+      msg.author.id,
+      1024,
+      0,
+      1,
+      "VC Request - Powered by Tram"
+    );
+    ctx.client.editChannelPermission(
+      c.id,
+      user.id,
+      1024,
+      0,
+      1,
+      "VC Request - Powered by Tram"
+    );
     c.createInvite({ maxUses: 1, reason: "VC Request - Powered by Tram" }).then(
       (i) => {
         db.set(guild.id, i.channel.id);
