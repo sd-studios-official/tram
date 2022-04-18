@@ -36,27 +36,6 @@ module.exports = new Command("vc", async (msg, args, ctx) => {
 
   // console.log(reason)
 
-  if (close) {
-    if (!db.get(guild.id)) {
-      return msg.channel.createMessage({
-        embed: {
-          title: "Error",
-          description:
-            "Sorry, there is no active temp VC found. Please DM `person-al#9861` if this is incorrect.",
-        },
-      });
-    }
-
-    ctx.client.deleteChannel(db.get(guild.id), "Temp VC - Powered by Tram");
-    db.delete(guild.id);
-    return msg.channel.createMessage({
-      embed: {
-        title: "Channel Delete Successful",
-        description: "Voice Channel successfully deleted.",
-      },
-    });
-  }
-
   if (db.get(guild.id)) {
     return msg.channel.createMessage({
       embed: {
@@ -85,11 +64,13 @@ module.exports = new Command("vc", async (msg, args, ctx) => {
           });
         });
 
-        msg.channel.createMessage({
-          embed: {
-            title: "VC Request Successful",
-            description: `${user.username} was successfully invited to the VC.\n\nPlease join with the link below: \n${channelCode}\n\nPlease run \`tram vc ${reason} --close\` once you are finished to delete the channel.\nTo invite more people run \`tram vc ${reason} --invite @username\`.`,
-          },
+        msg.author.getDMChannel().then((c) => {
+          c.createMessage({
+            embed: {
+              title: "VC Request Successful",
+              description: `${user.username} was successfully invited to the VC.\n\nPlease join with the link below: \n${channelCode}\n\nPlease run \`tram vc ${reason} --close\` once you are finished to delete the channel.\nTo invite more people run \`tram vc ${reason} --invite @username\`.`,
+            },
+          });
         });
         // msg.channel.createThreadWithoutMessage({name: `${reason}`, invitable: true, autoArchiveDuration: 60})
       }
