@@ -4,6 +4,7 @@ const config = require("../config.json");
 const express = require("express");
 const logger = require("fancy-log");
 const quickdb = require("quick.db");
+const prompt = require("prompt-sync")({ sigint: true });
 
 const db = quickdb;
 const app = express();
@@ -42,3 +43,11 @@ app.get("/tram-api/status/json", (req, res, next) => {
 app.get("/tram-api/dashboard", (req, res) => {
   res.sendFile(path.join(__dirname, "./dashboard/views/index.html"));
 });
+
+// // DB Delete
+// const guildId = prompt("GuildID:");
+// try {
+//   db.delete(guildId);
+// } catch (e) {
+//   logger.warn(`Error: ${e}`);
+// }
