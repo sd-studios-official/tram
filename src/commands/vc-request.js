@@ -122,3 +122,9 @@ module.exports = new Command("vc", async (msg, args, ctx) => {
     );
   });
 });
+
+module.exports.help = {
+  desc: "Creates a new VC request.",
+  args: "<name> <@username>",
+  sub: "--close",
+};
