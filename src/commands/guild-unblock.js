@@ -8,12 +8,13 @@ module.exports = new Command("unblock-guild", async (msg, args, ctx) => {
     msg.author.id !== "942554411199266826" ||
     msg.author.id !== "701561771529470074"
   )
-    msg.channel.createMessage({
-      embed: {
-        title: "Unblock Request Sent",
-        description: "Please check command line to input guild id.",
-      },
-    });
+    return;
+  msg.channel.createMessage({
+    embed: {
+      title: "Unblock Request Sent",
+      description: "Please check command line to input guild id.",
+    },
+  });
 
   const readline = require("readline").createInterface({
     input: process.stdin,
