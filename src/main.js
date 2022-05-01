@@ -1,4 +1,5 @@
 const { Client } = require("yuuko");
+const Eris = require("eris");
 const path = require("path");
 const config = require("../config.json");
 const express = require("express");
@@ -8,6 +9,7 @@ const prompt = require("prompt-sync")({ sigint: true });
 
 const db = quickdb;
 const app = express();
+
 const client = new Client({
   token: config.token,
   prefix: config.prefix,
@@ -19,6 +21,23 @@ client.extendContext = {
 };
 
 client.editStatus("dnd", { name: "things", type: 3 });
+
+client.on("interactionCreate", (interaction) => {
+  if (interaction instanceof Eris.CommandInteraction) {
+    console.log(interaction.data.id);
+    switch (interaction.data.name) {
+      case "edited_test_command":
+        interaction.createMessage("mno recieved");
+        return client.deleteCommand(interaction.data.id);
+      case "test_chat_input":
+        interaction.createMessage("interaction recieved");
+        return client.deleteCommand(interaction.data.id);
+      default: {
+        return interaction.createMessage("interaction recieved");
+      }
+    }
+  }
+});
 
 client.addDir(path.join(__dirname, "commands"));
 client.addDir(path.join(__dirname, "events"));
