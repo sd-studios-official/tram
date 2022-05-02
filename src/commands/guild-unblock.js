@@ -4,11 +4,7 @@ const qdb = require("quick.db");
 const db = qdb;
 const prompt = require("prompt-sync")({ sigint: true });
 module.exports = new Command("unblock-guild", async (msg, args, ctx) => {
-  if (
-    msg.author.id !== "942554411199266826" ||
-    msg.author.id !== "701561771529470074"
-  )
-    return;
+  if (msg.author.id !== "942554411199266826") return;
   msg.channel.createMessage({
     embed: {
       title: "Unblock Request Sent",
