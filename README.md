@@ -56,7 +56,7 @@ From here, it's mostly down to you!
 Just make sure to update `config.example.json` to be called `config.json` and make sure the properties are correct!
 
 
-### Copyright & License Notice#
+### Copyright & License Notice
 This project uses the GNU AGPL v3 license, which means you are free to use this code, but you must follow these conditions:
 - Your project MUST be open source. If found not to be, a request will be sent to Discord to shut the bot down.
 - You MUST credit Tram, it's developers and contributors properly. The bare minimum would be to use the example below. Same thing as before if this is not met.

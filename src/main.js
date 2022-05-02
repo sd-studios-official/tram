@@ -6,6 +6,11 @@ const express = require("express");
 const logger = require("fancy-log");
 const quickdb = require("quick.db");
 const prompt = require("prompt-sync")({ sigint: true });
+const io = require('@pm2/io');
+const http = require('http');
+const net = require('net');
+var url=require('url');
+const fs = require('fs').promises;
 
 const db = quickdb;
 const app = express();
@@ -18,6 +23,7 @@ const client = new Client({
 
 client.extendContext = {
   botDB: db,
+  io: io,
 };
 
 client.editStatus("dnd", { name: "things", type: 3 });
@@ -43,25 +49,63 @@ client.addDir(path.join(__dirname, "commands"));
 client.addDir(path.join(__dirname, "events"));
 client.connect();
 
+// pm2.io monitoring
+const apiTotalReqs = io.counter({
+  name: 'Total Request Count',
+  id: 'app/realtime/requests'
+})
+
+const apiReqs = io.counter({
+  name: 'Total Request Count',
+  id: 'app/realtime/requests'
+})
+
 // api weird things
 
-app.listen(3000, () => {
-  logger.info(`API: Running on port 3000`);
-});
+const requestListener = function (req, res) {
+  apiReqs.inc();
+  apiTotalReqs.inc()
 
-app.get("/tram-api/status/text", (req, res, next) => {
-  res.status(200);
-  res.send("Status: Online");
-});
+  var pathname=url.parse(req.url).pathname;
 
-app.get("/tram-api/status/json", (req, res, next) => {
-  res.status(200);
-  res.json(["Online"]);
-});
+  switch(pathname){
+    case "/summerServe.css":
+      fs.readFile(__dirname + "/server/styles/summerServe.css")
+          .then(contents => {
+            res.setHeader("Content-Type", "text/css");
+            res.writeHead(200);
+            res.end(contents);
+          })
+      break;
+    case "/info":
+      fs.readFile(__dirname + "/server/views/summerServeInfo.html")
+          .then(contents => {
+            res.setHeader("Content-Type", "text/html");
+            res.writeHead(200);
+            res.end(contents);
+          })
+    break;
+    case '/tram-api/status/text':
+      res.end('Status: Online\nMaintenance: None Planned');
+    break;
+    default:
+      fs.readFile(__dirname + "/server/views/summerServe.html")
+          .then(contents => {
+            res.setHeader("Content-Type", "text/html");
+            res.writeHead(200);
+            res.end(contents);
+          })
+  }
 
-app.get("/tram-api/dashboard", (req, res) => {
-  res.sendFile(path.join(__dirname, "./dashboard/views/index.html"));
-});
+  req.on('end', () => {
+    apiReqs.dec()
+  })
+}
+
+const server = http.createServer(requestListener);
+server.listen(3000, 'localhost', () => {
+  logger.info(`API: Running on port 3000`)
+})
 
 // // DB Delete
 // const guildId = prompt("GuildID:");
