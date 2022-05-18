@@ -1,3 +1,6 @@
 node_modules/
 json.sqlite
-config.json
+data/config.json
+old/
+temp/
+.env

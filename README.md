@@ -1,17 +1,20 @@
-# Tram [![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com) [![GitLab commit count](https://badgen.net/gitlab/last-commit/gitlab-org/gitlab-development-kit)](https://gitlab.com/gatelogicdev/tram-discord/-/commits/main)
+# Tram 
 
-The bot that does voice channels right.
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+
+[![GitLab commit count](https://badgen.net/gitlab/last-commit/gitlab-org/gitlab-development-kit)](https://gitlab.com/gatelogicdev/tram-discord/-/commits/main)
+
+The bot that does voice channels (and I mean, other Discord things) right.
 
 ## PLEASE READ
-While Tram is not made to be selfhosted, there is a setup guide. You MIGHT get support from either me or Summer if either of us have spare or free time. Don't ping us asking for help.
+While Tram is not made to be self hosted, there is a setup guide. You MIGHT get support from either me or Summer if either of us have spare or free time. Don't ping us asking for help.
 
 ### Prerequisites
 You will need the following:
 
 - NodeJS v17
-- NPM
-    - Nodemon
-    - ESLint
+- Yarn
+    - Nodemon installed globally (or install it locally I guess)
 - Git
 - VSCode
 
@@ -22,7 +25,7 @@ A few thing we *recommend* you have are:
 > It's just a good SSH tool :'
 - WebStorm
 > We find it works better, while it is paid if you are student you can get a student license!
-- Some semi advanced knowledge of JavaScript, Eris and SQL.
+- Some semi advanced knowledge of JavaScript, DiscordJS and SQL.
 
 ### Installation
 Once you have all the things listed above, you need to clone the repo to your local machine and get it setup!
@@ -45,7 +48,7 @@ And open into it
 ### The Fun Bit! (A.K.A Coding)
 Yay! Now we have everything downloaded, almost.
 
-Run ```npm i``` to fetch all the required packages. This might take a bit.
+Run ```yarn install``` to fetch all the required packages. This might take a bit.
 
 Now run ```code .``` presuming you are using VSCode, if you're not just open it in your IDE like you would normally.
 
@@ -59,5 +62,5 @@ Just make sure to update `config.example.json` to be called `config.json` and ma
 ### Copyright & License Notice
 This project uses the GNU AGPL v3 license, which means you are free to use this code, but you must follow these conditions:
 - Your project MUST be open source. If found not to be, a request will be sent to Discord to shut the bot down.
-- You MUST credit Tram, it's developers and contributors properly. The bare minimum would be to use the example below. Same thing as before if this is not met.
-> Core bot provided by Tram and it's contributors. Core libaries: Eris & Yuuko.
+- You MUST credit Tram, it's developers, contributors and core libraries properly. The bare minimum would be to use the example below. Same thing as before if this is not met.
+> Core bot provided by Tram and it's contributors. Core libraries: [DiscordJS](https://discord.js.org), [discord-slash-command-handler](https://github.com/KartikeSingh/discord-slash-command-handler).
