@@ -1,6 +1,6 @@
-const quickdb = require('quick.db');
-const db = quickdb;
-const { MessageEmbed } = require('discord.js');
+const quickdb = require('quick.db')
+const db = quickdb
+const { MessageEmbed } = require('discord.js')
 
 module.exports = {
   name: 'vc-close',
@@ -17,24 +17,24 @@ module.exports = {
     if (!db.get(commandData.user.id)) {
       const embed1 = new MessageEmbed()
         .setTitle('Error')
-        .setDescription("You do not appear to have an active vc. Please join [the support server](https://discord.gg/YXxET9b94S) and open a ticket if you do have an active vc linked to your user.\n\nYour user id is in the footer for support purposes.")
+        .setDescription('You do not appear to have an active vc. Please join [the support server](https://discord.gg/YXxET9b94S) and open a ticket if you do have an active vc linked to your user.\n\nYour user id is in the footer for support purposes.')
         .setColor('RED')
         .setFooter({ text: `Powered By Tram | UserID: ${commandData.user.id} | Error Code: gCSwx2` })
 
       return await commandData.interaction.followUp({ embeds: [embed1], ephemeral: true })
     }
 
-    const channelId = db.get(commandData.user.id);
-    let fetchedChannel = "";
+    const channelId = db.get(commandData.user.id)
+    let fetchedChannel = ''
 
     try {
-      fetchedChannel = guild.channels.cache.get(channelId);
+      fetchedChannel = guild.channels.cache.get(channelId)
     } catch {
       const embed1 = new MessageEmbed()
         .setTitle('Error')
-        .setDescription("Something went horribly wrong. Please make sure you are in the server that your VC channel is in.\n\n Please join [the support server](https://discord.gg/YXxET9b94S) and open a ticket if you are in the server.")
+        .setDescription('Something went horribly wrong. Please make sure you are in the server that your VC channel is in.\n\n Please join [the support server](https://discord.gg/YXxET9b94S) and open a ticket if you are in the server.')
         .setColor('RED')
-        .setFooter({ text: `Powered By Tram | Error Code: mZteUh` })
+        .setFooter({ text: 'Powered By Tram | Error Code: mZteUh' })
 
       return await commandData.interaction.followUp({ embeds: [embed1], ephemeral: true })
     }
@@ -42,9 +42,9 @@ module.exports = {
     if (!fetchedChannel) {
       const embed1 = new MessageEmbed()
         .setTitle('Error')
-        .setDescription("Please make sure you are in the server that your VC channel is in.\n\n Please join [the support server](https://discord.gg/YXxET9b94S) and open a ticket if you are in the server.")
+        .setDescription('Please make sure you are in the server that your VC channel is in.\n\n Please join [the support server](https://discord.gg/YXxET9b94S) and open a ticket if you are in the server.')
         .setColor('RED')
-        .setFooter({ text: `Powered By Tram | Error Code: mZteUh` })
+        .setFooter({ text: 'Powered By Tram | Error Code: mZteUh' })
 
       return await commandData.interaction.followUp({ embeds: [embed1], ephemeral: true })
     }
@@ -52,7 +52,7 @@ module.exports = {
     if (!guild.me.permissions.has('MANAGE_CHANNELS')) {
       const embed1 = new MessageEmbed()
         .setTitle('Error')
-        .setDescription("Tram does not have permission `MANAGE_CHANNELS`. Please give this permission for Tram to function.\n\nPlease refer to [the docs](docs.tram.summerdev.tk)")
+        .setDescription('Tram does not have permission `MANAGE_CHANNELS`. Please give this permission for Tram to function.\n\nPlease refer to [the docs](docs.tram.summerdev.tk)')
         .setColor('RED')
         .setFooter({ text: `Powered By Tram | UserID: ${commandData.user.id} | Error Code: aDu7Pq` })
 
@@ -62,7 +62,7 @@ module.exports = {
     if (!guild.me.permissions.has('MANAGE_GUILD')) {
       const embed1 = new MessageEmbed()
         .setTitle('Error')
-        .setDescription("Tram does not have permission `MANAGE_GUILD`. Please give this permission for Tram to function.\n\nPlease refer to [the docs](docs.tram.summerdev.tk)")
+        .setDescription('Tram does not have permission `MANAGE_GUILD`. Please give this permission for Tram to function.\n\nPlease refer to [the docs](docs.tram.summerdev.tk)')
         .setColor('RED')
         .setFooter({ text: `Powered By Tram | UserID: ${commandData.user.id} | Error Code: ncRZ9V` })
 
@@ -70,7 +70,7 @@ module.exports = {
     }
 
     await fetchedChannel.delete()
-    db.delete(commandData.user.id);
+    db.delete(commandData.user.id)
 
     const embed2 = new MessageEmbed()
       .setTitle('Success!')

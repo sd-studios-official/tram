@@ -1,6 +1,6 @@
-const quickdb = require('quick.db');
-const db = quickdb;
-const { MessageEmbed } = require('discord.js');
+const quickdb = require('quick.db')
+const db = quickdb
+const { MessageEmbed } = require('discord.js')
 
 module.exports = {
   name: 'vc-request',
@@ -41,7 +41,7 @@ module.exports = {
   run: async (commandData) => {
     const guild = commandData.client.guilds.cache.get(commandData.guild.id)
     const member = guild.members.cache.get(commandData.args[1])
-    let everyoneRole = guild.roles.cache.find(r => r.name === '@everyone')
+    const everyoneRole = guild.roles.cache.find(r => r.name === '@everyone')
 
     const user = commandData.client.users.cache.find(u => u.id === commandData.args[1])
 
@@ -49,7 +49,7 @@ module.exports = {
     let user2 = commandData.user
     let user3 = commandData.user
     let totalUserCount = 2
-    let userDmd = false
+    const userDmd = false
 
     if (commandData.args[2]) {
       user2 = guild.members.cache.get(commandData.args[2])
@@ -66,18 +66,18 @@ module.exports = {
     if (db.get(commandData.user.id)) {
       const embed1 = new MessageEmbed()
         .setTitle('Error')
-        .setDescription("For rate-limiting purposes, each user can only have 1 channel linked to a user at any time.\nWe are working on a fix so hold tight!\n\nTo close your current channel, run `/vc-close`!")
+        .setDescription('For rate-limiting purposes, each user can only have 1 channel linked to a user at any time.\nWe are working on a fix so hold tight!\n\nTo close your current channel, run `/vc-close`!')
         .setColor('RED')
         .setFooter({ text: 'Powered By Tram | Error Code: qN7eg2' })
 
       return await commandData.interaction.followUp({ embeds: [embed1], ephemeral: true })
     }
 
-    let channelCode = "";
-    let channelId = 0;
+    const channelCode = ''
+    let channelId = 0
 
     await guild.channels.create(commandData.args[0], {
-      type: "GUILD_VOICE",
+      type: 'GUILD_VOICE',
       userLimit: totalUserCount,
       reason: `${commandData.args[0]} | Powered By Tram VC Request`,
       permissionOverwrites: [
@@ -104,7 +104,7 @@ module.exports = {
       ]
     })
       .then((c) => {
-        channelId = c.id;
+        channelId = c.id
       })
 
     await db.set(commandData.user.id, channelId)
@@ -130,17 +130,15 @@ module.exports = {
 
     if (!userDmd) {
       if (commandData.args[2]) {
-        let user2m = commandData.client.users.fetch(user2.id, false).then((user) => {
-            user.send({ embeds: [embed3] })
+        const user2m = commandData.client.users.fetch(user2.id, false).then((user) => {
+          user.send({ embeds: [embed3] })
         })
-
       }
 
       if (commandData.args[3]) {
-        let user3m = commandData.client.users.fetch(user3.id, false).then((user) => {
+        const user3m = commandData.client.users.fetch(user3.id, false).then((user) => {
           user.send({ embeds: [embed3] })
         })
-
       }
     }
 
