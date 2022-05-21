@@ -74,7 +74,7 @@ module.exports = {
 
     const embed2 = new MessageEmbed()
       .setTitle('Success!')
-      .setDescription("All invited users have been invited by DM! More info in DM's.")
+      .setDescription("Channel successfully closed.")
       .setColor('GREEN')
       .setFooter({ text: 'Powered By Tram' })
 
