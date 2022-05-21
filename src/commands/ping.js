@@ -4,7 +4,7 @@ module.exports = {
   // aliases: ['getHelp'],
   category: 'general',
   slash: true,
-  global: false,
+  global: true,
   ownerOnly: false,
 
   // options: [
