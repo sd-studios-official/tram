@@ -406,10 +406,10 @@ discord-api-types@^0.31.1:
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.31.2.tgz#8d131e25340bd695815af3bb77128a6993c1b516"
   integrity sha512-gpzXTvFVg7AjKVVJFH0oJGC0q0tO34iJGSHZNz9u3aqLxlD6LfxEs9wWVVikJqn9gra940oUTaPFizCkRDcEiA==
 
-discord-slash-command-handler@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/discord-slash-command-handler/-/discord-slash-command-handler-3.2.2.tgz#8b5b679bee7f5da6b9786712e5840b65050d29e5"
-  integrity sha512-uYJrBZnJBkYvL6dfXDMhZYgZ9RVyKcW9t0zK1Knz4VbhdnXbfl1AGbQmDtLA7z9cbJ1hB4hju67mRSlTKQPskg==
+discord-slash-command-handler@3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/discord-slash-command-handler/-/discord-slash-command-handler-3.2.3.tgz#8118e3714cc5ae2283bdceec998987b45875abb3"
+  integrity sha512-IaN4bhFijDfKr6Xhe/TnMIsq9RcISH6T5YFZsU+4GD2qpHpz/sR61qge+0MZFlJUM8JPbcGlSv5RY1DkUJx5Vw==
   dependencies:
     discord.js "^13.2.0"
     mongoose "^6.0.4"
