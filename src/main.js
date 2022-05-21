@@ -1,8 +1,12 @@
 const { Client, Intents } = require('discord.js')
 const { token, mongoUri, prefix } = require('../data/config.json')
+const { port } = require('../data/serverConfig.json')
 const { Handler } = require('discord-slash-command-handler')
+const express = require('express')
+const path = require('path')
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] })
+const app = express()
 
 client.once('ready', () => {
   console.log(`${client.user.tag} has connected to the Discord API successfully.`)
@@ -24,11 +28,13 @@ client.once('ready', () => {
     errorReply: 'Error - An unknown error occurred.',
     notOwnerReply: 'Error - You do not have owner privileges.'
   })
-
-  // client.application.commands.fetch('975382679874834482')
-  //     .then((command) => {
-  //         command.delete()
-  //     })
 })
 
 client.login(token)
+
+app.get('/', (req, res) => {
+  console.log(`The access code is: ${req.query.code}`)
+  return res.sendFile('index.html', { root: path.join(__dirname, '../server/oauth') })
+});
+
+app.listen(port, () => console.log(`OAuth Server Running at http://localhost:${port}`))
