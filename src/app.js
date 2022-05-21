@@ -9,7 +9,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 const app = express()
 
 client.once('ready', () => {
-  console.log(`${client.user.tag} has connected to the Discord API successfully.`)
+  console.log(`[Tram] [Bot] ~ ${client.user.tag} Successfully Connected to Discord`)
 
   const handler = new Handler(client, {
     commandFolder: '/commands',
@@ -37,4 +37,4 @@ app.get('/', (req, res) => {
   return res.sendFile('index.html', { root: path.join(__dirname, '../server/oauth') })
 });
 
-app.listen(port, () => console.log(`OAuth Server Running at http://localhost:${port}`))
+app.listen(port, () => console.log(`[Tram] [OAuth] ~ Server Running On Port ${port}`))

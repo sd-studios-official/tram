@@ -2,7 +2,7 @@
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
-[![GitLab commit count](https://badgen.net/gitlab/last-commit/gitlab-org/gitlab-development-kit)](https://gitlab.com/gatelogicdev/tram-discord/-/commits/main)
+[![GitLab commit count](https://badgen.net/gitlab/last-commit/gitlab-org/gitlab-development-kit)](https://gitlab.com/summerdev-studios/tram-discord/-/commits/main)
 
 The bot that does voice channels (and I mean, other Discord things) right.
 
