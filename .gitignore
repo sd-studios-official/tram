@@ -4,3 +4,4 @@ data/config.json
 old/
 temp/
 .env
+data/serverConfig.json
