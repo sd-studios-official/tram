@@ -1,6 +1,7 @@
-const quickdb = require('quick.db')
-const db = quickdb
+// const quickdb = require('quick.db')
+// const db = quickdb
 const { MessageEmbed } = require('discord.js')
+const vcModel = require('../models/vc')
 
 module.exports = {
   name: 'vc-request',
@@ -63,17 +64,16 @@ module.exports = {
 
     // await commandData.interaction.followUp({ content: `${user} - ${user2} - ${user3}` })
 
-    if (db.get(commandData.user.id)) {
-      const embed1 = new MessageEmbed()
-        .setTitle('Error')
-        .setDescription('For rate-limiting purposes, each user can only have 1 channel linked to a user at any time.\nWe are working on a fix so hold tight!\n\nTo close your current channel, run `/vc-close`!')
-        .setColor('RED')
-        .setFooter({ text: 'Powered By Tram | Error Code: qN7eg2' })
+    // if (db.get(commandData.user.id)) {
+    //   const embed1 = new MessageEmbed()
+    //     .setTitle('Error')
+    //     .setDescription('For rate-limiting purposes, each user can only have 1 channel linked to a user at any time.\nWe are working on a fix so hold tight!\n\nTo close your current channel, run `/vc-close`!')
+    //     .setColor('RED')
+    //     .setFooter({ text: 'Powered By Tram | Error Code: qN7eg2' })
+    //
+    //   return await commandData.interaction.followUp({ embeds: [embed1], ephemeral: true })
+    // }
 
-      return await commandData.interaction.followUp({ embeds: [embed1], ephemeral: true })
-    }
-
-    const channelCode = ''
     let channelId = 0
 
     await guild.channels.create(commandData.args[0], {
@@ -107,13 +107,20 @@ module.exports = {
         channelId = c.id
       })
 
-    await db.set(commandData.user.id, channelId)
+    const channelCode = (Math.random() + 1).toString(36).substring(7);
+
+    // await db.set(commandData.user.id, channelId)
+    await new vcModel({
+      userId: commandData.user.id,
+      channelId: channelId,
+      channelCode: channelCode,
+    }).save()
 
     const embed4 = new MessageEmbed()
       .setTitle('VC Request | Feedback Data')
       .addFields(
         { name: 'Name/Reason', value: commandData.args[0] },
-        { name: 'Users (May be your user due to bug)', value: `<@${member.id}> <@${user2.id}> <@${user3.id}>` }
+        { name: 'Channel Code', value: `${channelCode} - Use this to close your channel!` }
       )
       .setColor('GREEN')
       .setFooter({ text: 'Powered By Tram | Use `/vc-close` to end the vc! | Bug Code: 7rRNFx' })

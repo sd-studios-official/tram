@@ -1,6 +1,7 @@
 const quickdb = require('quick.db')
 const db = quickdb
 const { MessageEmbed } = require('discord.js')
+const vcModel = require('../models/vc')
 
 module.exports = {
   name: 'vc-close',
@@ -11,10 +12,34 @@ module.exports = {
   global: true,
   ownerOnly: false,
 
+  options: [
+    {
+      name: 'channel-code',
+      description: "The channel code you were sent.",
+      required: true,
+      type: 'string'
+    }
+  ],
+
   run: async (commandData) => {
     const guild = commandData.client.guilds.cache.get(commandData.guild.id)
+    let result = {}
 
-    if (!db.get(commandData.user.id)) {
+    try {
+      result = await vcModel.findOne({
+        channelCode: commandData.args[0]
+      })
+    } catch (e) {
+        const embed1 = new MessageEmbed()
+          .setTitle('Error')
+          .setDescription('You do not appear to have an active vc. Please join [the support server](https://discord.gg/YXxET9b94S) and open a ticket if you do have an active vc linked to your user.\n\nYour user id is in the footer for support purposes.')
+          .setColor('RED')
+          .setFooter({ text: `Powered By Tram | UserID: ${commandData.user.id} | Error Code: gCSwx2` })
+
+        return await commandData.interaction.followUp({ embeds: [embed1], ephemeral: true })
+    }
+
+    if (result === null) {
       const embed1 = new MessageEmbed()
         .setTitle('Error')
         .setDescription('You do not appear to have an active vc. Please join [the support server](https://discord.gg/YXxET9b94S) and open a ticket if you do have an active vc linked to your user.\n\nYour user id is in the footer for support purposes.')
@@ -24,7 +49,19 @@ module.exports = {
       return await commandData.interaction.followUp({ embeds: [embed1], ephemeral: true })
     }
 
-    const channelId = db.get(commandData.user.id)
+    // if (result.userId !== commandData.user.id || !commandData.user.permissions.has('ADMINISTRATOR'))
+
+    // if (!db.get(commandData.user.id)) {
+    //   const embed1 = new MessageEmbed()
+    //     .setTitle('Error')
+    //     .setDescription('You do not appear to have an active vc. Please join [the support server](https://discord.gg/YXxET9b94S) and open a ticket if you do have an active vc linked to your user.\n\nYour user id is in the footer for support purposes.')
+    //     .setColor('RED')
+    //     .setFooter({ text: `Powered By Tram | UserID: ${commandData.user.id} | Error Code: gCSwx2` })
+    //
+    //   return await commandData.interaction.followUp({ embeds: [embed1], ephemeral: true })
+    // }
+
+    const channelId = result.channelId
     let fetchedChannel = ''
 
     try {
@@ -70,7 +107,9 @@ module.exports = {
     }
 
     await fetchedChannel.delete()
-    db.delete(commandData.user.id)
+    await vcModel.deleteOne({
+      channelCode: commandData.args[0]
+    })
 
     const embed2 = new MessageEmbed()
       .setTitle('Success!')
