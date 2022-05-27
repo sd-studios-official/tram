@@ -4,21 +4,27 @@ const {
   mongoUriTimeouts,
   mongoUriVC,
   prefix,
+  assistantsLicense
 } = require("../data/config.json");
-const { port } = require("../data/serverConfig.json");
+const { port, clientId, clientSecret, superSecret } = require("../data/serverConfig.json");
 const { Handler } = require("discord-slash-command-handler");
 const express = require("express");
 const path = require("path");
 const logger = require("./customModules/logger");
 const mongoose = require("mongoose");
+const passport = require('passport');
+const passportDiscord = require('passport-discord');
+const ejs = require('ejs');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const MemoryStore = require('memorystore')
+const cookieParser = require('cookie-parser')
 
 const client = new Client({
-  intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_MEMBERS,
-  ],
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS],
+  // ws: { properties: { $browser: "Discord iOS" } }
 });
+
 const app = express();
 const vcURI = mongoUriVC;
 
@@ -47,28 +53,55 @@ client.once("ready", () => {
     errorReply: "Error - An unknown error occurred.",
     notOwnerReply: "Error - You do not have owner privileges.",
   });
-});
 
-client.login(token);
-
-app.get("/", (req, res) => {
-  console.log(`The access code is: ${req.query.code}`);
-  return res.sendFile("index.html", {
-    root: path.join(__dirname, "../server/oauth"),
-  });
-});
-
-app.listen(port, () => logger.oauth(`Server Running On Port ${port}`));
-
-mongoose
-  .connect(vcURI, {
+  mongoose.connect(vcURI, {
     useNewURLParser: true,
     useUnifiedTopology: true,
     // useFindAndModify: false
     keepAlive: true,
   })
-  .then(() => {
-    logger.mongo("VC Database Connected");
-  }).catch((err) => {
+    .then(() => {
+      logger.mongo("VC Database Connected");
+    }).catch((err) => {
     console.log(err)
+  });
 });
+
+// client.user.setActivity('the voice channels', { type: "WATCHING" })
+// client.vcdb = connection;
+
+client.login(token);
+
+app.use(cookieParser())
+app.use(express.static('public'));
+app.use('/api/discord', require('./server/oauth/discord.js'))
+app.use((err, req, res, next) => {
+  switch (err.message) {
+    case 'NoCodeProvided':
+      return res.status(400).send({
+        status: 'ERROR',
+        error: err.message,
+      });
+    default:
+      return res.status(500).send({
+        status: 'ERROR',
+        error: err.message,
+      });
+  }
+});
+
+// app.get('/', (req, res) => {
+//   res.status(200).sendFile(__dirname + '/server/oauth/index.html')
+// })
+
+app.get('/dashboard/app.js', function(req, res) {
+  res.sendFile(path.join(__dirname + '/server/dashboard/app.js'));
+});
+
+app.get('/', (req, res) => {
+  res.status(200).sendFile(__dirname + '/server/dashboard/index.html')
+})
+
+app.listen(port, () => {
+  logger.oauth(`Running On Port ${port}`)
+})

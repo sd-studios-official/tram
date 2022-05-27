@@ -1,22 +1,22 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
-  userId: {
+  consent: {
+    type: Boolean,
+    required: true
+  },
+  nickname: {
+    type: String,
+    required: false
+  },
+  pronouns: {
     type: String,
     required: true
   },
-  channelId: {
+  info: {
     type: String,
-    required: true
-  },
-  channelCode: {
-    type: String,
-    required: true
-  },
-  guildId: {
-    type: String,
-    required: true
+    required: false
   }
 })
 
-module.exports = mongoose.model('vc', schema)
+module.exports = mongoose.model('updr', schema)

@@ -114,6 +114,7 @@ module.exports = {
       userId: commandData.user.id,
       channelId: channelId,
       channelCode: channelCode,
+      guildId: guild.id
     }).save()
 
     const embed4 = new MessageEmbed()
