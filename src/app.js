@@ -6,7 +6,7 @@ const {
   prefix,
   assistantsLicense
 } = require("../data/config.json");
-const { port, clientId, clientSecret, superSecret } = require("../data/serverConfig.json");
+const { port, clientId, clientSecret, superSecret, address } = require("../data/serverConfig.json");
 const { Handler } = require("discord-slash-command-handler");
 const express = require("express");
 const path = require("path");
@@ -19,6 +19,9 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const MemoryStore = require('memorystore')
 const cookieParser = require('cookie-parser')
+const { catchAsync } = require('./server/oauth/utils')
+const config = require('../data/serverConfig.json')
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args))
 
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS],
@@ -101,6 +104,22 @@ app.get('/dashboard/app.js', function(req, res) {
 app.get('/', (req, res) => {
   res.status(200).sendFile(__dirname + '/server/dashboard/index.html')
 })
+
+app.get('/dashboard', catchAsync(async (req, res) => {
+  const cookie = req.cookies.access
+  if (!cookie || cookie === undefined) {
+    return res.redirect(`http://${config.address}:3001/api/discord/login/dash`)
+  }
+
+  const site2 = await fetch('https://discord.com/api/v9/users/@me', {
+    method: 'GET',
+    headers: {'Authorization': `Bearer ${cookie}`}
+  });
+
+  const response1 = await site2.json()
+  const pfp = `https://cdn.discordapp.com/avatars/${response1.id}/${response1.avatar}.png`
+  res.send(pfp)
+}))
 
 app.listen(port, () => {
   logger.oauth(`Running On Port ${port}`)
