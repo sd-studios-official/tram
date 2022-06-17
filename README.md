@@ -2,7 +2,7 @@
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
-[![GitLab commit count](https://badgen.net/gitlab/last-commit/gitlab-org/gitlab-development-kit)](https://gitlab.com/summerdev-studios/tram-discord/-/commits/main)
+[//]: # ([![GitLab commit count]&#40;https://badgen.net/gitlab/last-commit/gitlab-org/gitlab-development-kit&#41;]&#40;https://gitlab.com/summerdev-studios/tram-discord/-/commits/main&#41;)
 
 The bot that does voice channels (and I mean, other Discord things) right.
 
@@ -16,15 +16,14 @@ You will need the following:
 - Yarn
     - Nodemon installed globally (or install it locally I guess)
 - Git
-- VSCode
+- VSCode/WebStorm
+  > We find WebStorm works better, while it is paid if you are student you can get a student license!
 
 A few thing we *recommend* you have are:
 - A VPS
 > We recommend this as it means you don't have to have your PC on 24/7 for the bot to work.
 - PuTTY
 > It's just a good SSH tool :'
-- WebStorm
-> We find it works better, while it is paid if you are student you can get a student license!
 - Some semi advanced knowledge of JavaScript, DiscordJS and SQL.
 
 ### Installation
@@ -39,7 +38,7 @@ Create a "Coding" folder (you don't need to do this) - I would recommend making 
 
 Now clone the repo
 
-```git clone https://gitlab.com/summerdev-studios/tram-discord.git```
+```git clone https://github.com/summerisadev/tram.git```
 
 And open into it
 
