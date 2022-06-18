@@ -1,6 +1,6 @@
 {
   "name": "Tram",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Fully Featured Discord bot with many useful and fun commands!",
   "main": "src/app.js",
   "repository": "https://gitlab.com/summerdev-studios/tram-discord.git",
@@ -26,6 +26,7 @@
     "undici": "^5.2.0"
   },
   "scripts": {
+    "start": "node src/launch.js",
     "dev": "nodemon src/launch.js",
     "lint": "standard",
     "list-fix": "standard --fix"
