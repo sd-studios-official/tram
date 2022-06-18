@@ -1,27 +1,13 @@
 const { Client, Intents } = require("discord.js");
-const {
-  token,
-  mongoUriTimeouts,
-  mongoUriVC,
-  prefix,
-  assistantsLicense
-} = require("../data/config.json");
-const { port, clientId, clientSecret, superSecret, address } = require("../data/serverConfig.json");
 const { Handler } = require("discord-slash-command-handler");
 const express = require("express");
 const path = require("path");
 const logger = require("./customModules/logger");
 const mongoose = require("mongoose");
-const passport = require('passport');
-const passportDiscord = require('passport-discord');
-const ejs = require('ejs');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const MemoryStore = require('memorystore')
-const cookieParser = require('cookie-parser')
 const { catchAsync } = require('./server/oauth/utils')
-const config = require('../data/serverConfig.json')
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args))
+require('dotenv').config();
+const cookieParser = require('cookie-parser');
 
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS],
@@ -29,7 +15,7 @@ const client = new Client({
 });
 
 const app = express();
-const vcURI = mongoUriVC;
+const vcURI = process.env.MONGO_URI_VC;
 
 client.once("ready", () => {
   logger.bot(`${client.user.tag} Successfully Connected to Discord`);
@@ -38,14 +24,14 @@ client.once("ready", () => {
     commandFolder: "/commands",
     commandType: "file" || "folder",
     eventFolder: "/events",
-    mongoURI: mongoUriTimeouts,
+    mongoURI: process.env.MONGO_URI_COOLDOWN,
     slashGuilds: [
       "964238274581393418",
       "977187479109107732",
       "955445111527964722",
     ],
     allSlash: true,
-    owners: ["942554411199266826", "701561771529470074"],
+    owners: [process.env.TRAM_OWNER],
     handleSlash: true,
     handleNormal: true,
     prefix,
@@ -73,7 +59,7 @@ client.once("ready", () => {
 // client.user.setActivity('the voice channels', { type: "WATCHING" })
 // client.vcdb = connection;
 
-client.login(token);
+client.login(process.env.TRAM_TOKEN).then(r => logger.bot(r));
 
 app.use(cookieParser())
 app.use(express.static('public'));
@@ -108,7 +94,7 @@ app.get('/', (req, res) => {
 app.get('/dashboard', catchAsync(async (req, res) => {
   const cookie = req.cookies.access
   if (!cookie || cookie === undefined) {
-    return res.redirect(`http://${config.address}:3001/api/discord/login/dash`)
+    return res.redirect(`http://${process.env.TRAM_ADDRESS}/api/discord/login/dash`)
   }
 
   const site2 = await fetch('https://discord.com/api/v9/users/@me', {
@@ -121,6 +107,6 @@ app.get('/dashboard', catchAsync(async (req, res) => {
   res.send(pfp)
 }))
 
-app.listen(port, () => {
-  logger.oauth(`Running On Port ${port}`)
+app.listen(process.env.TRAM_PORT, () => {
+  logger.oauth(`Running On Port 8080`)
 })

@@ -58,6 +58,13 @@ From here, it's mostly down to you!
 Just make sure to update `config.example.json` to be called `config.json` and make sure the properties are correct!
 
 
+# Docker 
+
+Due to the amount of configuration required for Tram, while we have included a Dockerfile, you will need to clone the repo to a local machine and set the config up locally, then from there you can build an image.
+
+We are looking into different options for configuration, but for now, this is the best we can do.
+
+
 ### Copyright & License Notice
 This project uses the GNU AGPL v3 license, which means you are free to use this code, but you must follow these conditions:
 - Your project MUST be open source. If found not to be, a request will be sent to Discord to shut the bot down.
