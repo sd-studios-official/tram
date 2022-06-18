@@ -1,4 +1,4 @@
-const { MessageActionRow, MessageButton, MessageEmbed, MessageCollector, Modal, TextInputComponent } = require('discord.js');
+const { MessageActionRow, MessageButton, MessageEmbed, MessageCollector, Modal, TextInputComponent } = require('discord.js')
 
 module.exports = {
   name: 'udpr-create',

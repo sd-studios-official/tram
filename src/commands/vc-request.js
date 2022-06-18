@@ -107,13 +107,13 @@ module.exports = {
         channelId = c.id
       })
 
-    const channelCode = (Math.random() + 1).toString(36).substring(7);
+    const channelCode = (Math.random() + 1).toString(36).substring(7)
 
     // await db.set(commandData.user.id, channelId)
     await new vcModel({
       userId: commandData.user.id,
-      channelId: channelId,
-      channelCode: channelCode,
+      channelId,
+      channelCode,
       guildId: guild.id
     }).save()
 

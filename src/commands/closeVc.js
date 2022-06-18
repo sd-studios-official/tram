@@ -15,7 +15,7 @@ module.exports = {
   options: [
     {
       name: 'channel-code',
-      description: "The channel code you were sent.",
+      description: 'The channel code you were sent.',
       required: true,
       type: 'string'
     }
@@ -30,13 +30,13 @@ module.exports = {
         channelCode: commandData.args[0]
       })
     } catch (e) {
-        const embed1 = new MessageEmbed()
-          .setTitle('Error')
-          .setDescription('You do not appear to have an active vc. Please join [the support server](https://discord.gg/YXxET9b94S) and open a ticket if you do have an active vc linked to your user.\n\nYour user id is in the footer for support purposes.')
-          .setColor('RED')
-          .setFooter({ text: `Powered By Tram | UserID: ${commandData.user.id} | Error Code: gCSwx2` })
+      const embed1 = new MessageEmbed()
+        .setTitle('Error')
+        .setDescription('You do not appear to have an active vc. Please join [the support server](https://discord.gg/YXxET9b94S) and open a ticket if you do have an active vc linked to your user.\n\nYour user id is in the footer for support purposes.')
+        .setColor('RED')
+        .setFooter({ text: `Powered By Tram | UserID: ${commandData.user.id} | Error Code: gCSwx2` })
 
-        return await commandData.interaction.followUp({ embeds: [embed1], ephemeral: true })
+      return await commandData.interaction.followUp({ embeds: [embed1], ephemeral: true })
     }
 
     if (result === null) {
@@ -113,7 +113,7 @@ module.exports = {
 
     const embed2 = new MessageEmbed()
       .setTitle('Success!')
-      .setDescription("Channel successfully closed.")
+      .setDescription('Channel successfully closed.')
       .setColor('GREEN')
       .setFooter({ text: 'Powered By Tram' })
 

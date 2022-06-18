@@ -11,7 +11,7 @@ module.exports = {
   ownerOnly: false,
 
   run: async (commandData) => {
-    let totalSeconds = (commandData.client.uptime / 1000);
+    const totalSeconds = (commandData.client.uptime / 1000)
 
     const embed = new MessageEmbed()
       .setTitle('Tram Info')
