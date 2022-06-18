@@ -34,7 +34,7 @@ client.once('ready', () => {
     owners: [process.env.TRAM_OWNER],
     handleSlash: true,
     handleNormal: true,
-    prefix,
+    prefix: process.env.TRAM_PREFIX,
     timeout: true,
     permissionReply:
       'Error - You do not have the correct permission level. Contact the server owner or admin if this is a mistake.',
