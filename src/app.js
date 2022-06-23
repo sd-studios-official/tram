@@ -25,11 +25,7 @@ client.once('ready', () => {
     commandType: 'file' || 'folder',
     eventFolder: '/events',
     mongoURI: process.env.MONGO_URI_COOLDOWN,
-    slashGuilds: [
-      '964238274581393418',
-      '977187479109107732',
-      '955445111527964722'
-    ],
+    slashGuilds: process.env.TRAM_TEST_GUILD_ID,
     allSlash: true,
     owners: [process.env.TRAM_OWNER],
     handleSlash: true,
