@@ -1,7 +1,7 @@
 version: '3'
 services:
   bot:
-    build: .
+    image: summerdev/tram
     ports:
       - "8080:8080"
     env_file:

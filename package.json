@@ -1,6 +1,6 @@
 {
   "name": "Tram",
-  "version": "1.1.0",
+  "version": "1.1.4",
   "description": "A Fully Featured Discord bot with many useful and fun commands!",
   "main": "src/app.js",
   "repository": "https://gitlab.com/summerdev-studios/tram-discord.git",
