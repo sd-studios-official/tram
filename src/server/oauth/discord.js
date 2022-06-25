@@ -132,11 +132,11 @@ router.get('/callback', catchAsync(async (req, res) => {
   }
 
   const params = new URLSearchParams()
-  params.append('client_id', config.clientId)
-  params.append('client_secret', config.clientSecret)
+  params.append('client_id', CLIENT_ID)
+  params.append('client_secret', CLIENT_SECRET)
   params.append('grant_type', 'authorization_code')
   params.append('code', code)
-  params.append('redirect_uri', `http://${config.address}:3001/api/discord/callback/dash`)
+  params.append('redirect_uri', `http://${process.env.TRAM_ADDRESS}:${process.env.TRAM_PORT}/api/discord/callback/dash`)
 
   const site = await fetch('https://discord.com/api/v9/oauth2/token', {
     method: 'POST',
@@ -159,7 +159,7 @@ router.get('/callback', catchAsync(async (req, res) => {
   res.cookie('access', accessToken)
   res.cookie('refresh', refreshToken)
 
-  res.redirect(`http://${config.address}:3001/dashboard`)
+  res.redirect(`http://${process.env.TRAM_ADDRESS}:${process.env.TRAM_PORT}/dashboard`)
 }))
 
 module.exports = router
