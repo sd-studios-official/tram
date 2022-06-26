@@ -1,3 +1,4 @@
+require('newrelic');
 const { Client, Intents } = require('discord.js')
 const { Handler } = require('discord-slash-command-handler')
 const express = require('express')
@@ -11,7 +12,6 @@ const cookieParser = require('cookie-parser')
 
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS]
-  // ws: { properties: { $browser: "Discord iOS" } }
 })
 
 const app = express()

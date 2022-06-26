@@ -6,3 +6,4 @@ temp/
 .env
 .env
 data/serverConfig.json
+newrelic.js.txt
