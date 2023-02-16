@@ -7,7 +7,7 @@
   "author": "summer.",
   "license": "AGPL-3.0-or-later",
   "dependencies": {
-    "body-parser": "^1.20.0",
+    "body-parser": "^1.20.1",
     "btoa": "^1.2.1",
     "cookie-parser": "^1.4.6",
     "discord-slash-command-handler": "3.2.3",
