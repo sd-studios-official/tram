@@ -23,7 +23,7 @@
     "better-sqlite3": "^7.5.1",
     "discord-eris-embeds": "^1.0.4",
     "dotenv": "^16.0.0",
-    "eris": "^0.16.1",
+    "eris": "^0.17.2",
     "express": "^4.17.3",
     "fancy-log": "^2.0.0",
     "got": "^11.8.3",
